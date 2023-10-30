@@ -1,0 +1,98 @@
+# REST-client
+# примеры API-запросов
+
+# Текущий пользователь
+GET {{authUrl}}/users/me/
+Authorization: Token {{superuser_token}}
+
+###
+
+# Список пользователей
+GET {{authUrl}}/users/
+Authorization: Token {{superuser_token}}
+
+###
+
+# Регистрация нового пользователя
+POST {{authUrl}}/users/
+Content-Type: application/json
+
+{
+  "email": "{{email1}}",
+  "password": "{{password1}}",
+  "type": "buyer",
+  "last_name": "Киевский",
+  "first_name": "Сергей"
+}
+
+###
+
+# Активация пользователя
+POST {{authUrl}}/users/activation/
+Content-Type: application/json
+
+{
+  "uid": "Mg",
+  "token": "bwlvvk-e318a9f8eb569656ce03cf9603c11871"
+}
+
+###
+
+# Получить токен аутентификации пользователя
+POST {{authUrl}}/token/login/
+Content-Type: application/json
+
+{
+  "email": "{{email1}}",
+  "password": "{{password1}}"
+}
+
+###
+
+# Удаление токена аутентификации пользователя
+POST {{authUrl}}/token/logout/
+Content-Type: application/json
+Authorization: Token {{token1}}
+
+###
+
+# Удаление пользователя
+DELETE {{authUrl}}/users/29/
+Content-Type: application/json
+Authorization: Token {{superuser_token}}
+
+{
+  "current_password": "{{superuser_password}}"
+}
+
+###
+
+# Редактирование пользователя
+PATCH {{authUrl}}/users/2/
+Content-Type: application/json
+Authorization: Token {{token1}}
+
+{
+  "patronymic": "Николаевич"
+}
+
+###
+
+# Контакты пользователя
+GET {{authUrl}}/contacts/
+Authorization: Token {{superuser_token}}
+
+###
+
+# Добавить контакт
+POST {{authUrl}}/contacts/
+Content-Type: application/json
+Authorization: Token {{superuser_token}}
+
+{
+  "city": "{{city1}}",
+  "phone": "{{phone1}}",
+  "to_user": "1"
+}
+
+###

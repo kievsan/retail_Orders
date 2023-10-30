@@ -1,0 +1,29 @@
+# IDE specific
+.idea/
+.vscode/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+*.sqlite3
+
+# dotenv environment variables file
+.env
+env/
+venv/
+.venv/
+*.env.*
+
+# Logs
+logs
+*.log
+
+### Project specific ###
+settings_local.py
+services/pgadmin
+http-*
+
+### OS specific ###
+.DS_Store
