@@ -22,7 +22,7 @@ class UserManager(BaseUserManager):
 
     def _create_user(self, email, password, **extra_fields):
         """
-        Create and save a user with the given username, email, and password.
+        Create and save a user with the given email, and password.
         """
         if not email:
             raise ValueError('The email must be set.')
@@ -59,7 +59,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['last_name', 'first_name', 'patronymic', 'type', 'company', 'position']
     USERNAME_FIELD = 'email'
     MAIL_FIELD = "email"
-    RELATED_DB = 'contacts'
+    CONTACTS_DB = 'contacts'
     objects = UserManager()
     current_validator = UnicodeUsernameValidator()
 
@@ -117,7 +117,9 @@ class Contact(models.Model):
         :param PhoneNumber phone: contact phone;
         :param str city, street, house, structure, building, apartment : contact address.
     """
-    to_user = models.ForeignKey(User, verbose_name=_('user'), related_name=User.RELATED_DB, on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, verbose_name=_('user'),
+                                related_name=User.CONTACTS_DB,
+                                on_delete=models.CASCADE)
     person = models.CharField(_('contact person'), help_text=_('Enter contact person'), max_length=50, blank=True)
     city = models.CharField(_('city'), help_text=_('Enter city name'), max_length=50, null=False, blank=False)
     street = models.CharField(_('street'), help_text=_('Enter street name'), max_length=50, blank=True)
@@ -140,6 +142,6 @@ class Contact(models.Model):
         return f'{self.person}, {self.phone}, {self.city} {self.street} {self.house}'
 
     class Meta:
-        db_table = User.RELATED_DB
+        db_table = User.CONTACTS_DB
         verbose_name = _('Contact')
         verbose_name_plural = _('Personal contacts')

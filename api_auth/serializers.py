@@ -18,9 +18,9 @@ class UserSerializer(djoser.UserSerializer):
         fields = tuple(User.REQUIRED_FIELDS) + (
             settings.USER_ID_FIELD,
             settings.LOGIN_FIELD,
-        ) + (User.RELATED_DB,)
+        ) + (User.CONTACTS_DB,)
         depth = 1
-        read_only_fields = (settings.LOGIN_FIELD, User.RELATED_DB,)
+        read_only_fields = (settings.LOGIN_FIELD, User.CONTACTS_DB,)
 
 
 class ContactSerializer(serializers.ModelSerializer):
