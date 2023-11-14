@@ -1,3 +1,99 @@
+GET http://localhost:8008/api/v1/stores/2/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T141036.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T140749.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T135859.200.json
+
+###
+
+POST http://localhost:8008/api/v1/stores/me/
+Content-Type: application/json
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+{
+  "name": "myStore-3",
+  "url": "http://myStore3.example.reg.ru"
+}
+
+<> 2023-11-14T135648.500.html
+
+###
+
+DELETE http://localhost:8008/api/v1/stores/me/19/
+Content-Type: application/json
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+{
+  "current_password": "retail111"
+}
+
+###
+
+POST http://localhost:8008/api/v1/stores/me/
+Content-Type: application/json
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+{
+  "name": "myStore-3",
+  "url": "http://myStore3.example.reg.ru"
+}
+
+<> 2023-11-14T135304.201.json
+
+###
+
+POST http://localhost:8008/api/v1/stores/me/
+Content-Type: application/json
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+{
+  "name": "myStore-3",
+  "url": "http://myStore3.example.reg.ru"
+}
+
+<> 2023-11-14T134520.500.html
+
+###
+
+POST http://localhost:8008/api/v1/stores/me/
+Content-Type: application/json
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+{
+  "name": "myStore-3",
+  "url": "http://myStore3.example.reg.ru"
+}
+
+<> 2023-11-14T133539.500.html
+
+###
+
+POST http://localhost:8008/api/v1/stores/me/
+Content-Type: application/json
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+{
+  "name": "myStore-3",
+  "url": "http://myStore3.example.reg.ru"
+}
+
+<> 2023-11-14T133422.201.json
+
+###
+
 POST http://localhost:8008/api/v1/stores/me/
 Content-Type: application/json
 Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
@@ -351,118 +447,6 @@ Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
 }
 
 <> 2023-11-14T111445.500.html
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T110636.500.html
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T110505.500.html
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/12/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111"
-}
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T105451.201.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T105430.400.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T104333.201.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T104316.201.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T104240.201.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
 
 ###
 

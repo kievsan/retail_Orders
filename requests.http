@@ -107,6 +107,18 @@ Authorization: Token {{superuser_token}}
 
 ###
 
+# ВСЕ Магазины
+GET {{apiUrl}}/stores/
+Authorization: Token {{token1}}
+
+###
+
+# Любой магазин по его id
+GET {{apiUrl}}/stores/2/
+Authorization: Token {{token1}}
+
+###
+
 # Партнерские магазины всех пользователей
 GET {{apiUrl}}/stores/partners/
 Authorization: Token {{token1}}
@@ -144,7 +156,7 @@ Authorization: Token {{token1}}
 ###
 
 # Удалить по id свой магазин из партнеров
-DELETE {{apiUrl}}/stores/me/16/
+DELETE {{apiUrl}}/stores/me/19/
 Content-Type: application/json
 Authorization: Token {{token1}}
 

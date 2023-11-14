@@ -16,27 +16,11 @@ from api.models import Store
 import api.serializers as serializers
 
 
-class MeStoresViewSet(viewsets.ModelViewSet):
-    """ CRUD for user's shops """
+class StoreViewSet(viewsets.ReadOnlyModelViewSet):
+    """ store """
     permission_classes = [IsAuthenticated]
-    # serializer_class = serializers.StoreSerializer
-
-    def get_queryset(self):
-        queryset = Store.objects.filter(to_user_id=self.request.user.id).all()
-        # pprint(store for store in queryset if store)  ###
-        return queryset
-
-    def get_serializer_class(self):
-        return serializers.StoreSerializer
-
-    def create(self, request, *args, **kwargs):
-        request.data['to_user'] = self.request.user.id
-        # return super(MeStoresViewSet, self).create(self, request, *args, **kwargs)
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+    serializer_class = serializers.StoreSerializer
+    queryset = Store.objects.all()
 
     filterset_fields = ('accepts_orders',)
     ordering_fields = ('name', 'id',)
@@ -47,10 +31,7 @@ class MeStoresViewSet(viewsets.ModelViewSet):
 class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
     """ Partners stores list """
     permission_classes = [IsAuthenticated]
-
-    def get_serializer_class(self):
-        return serializers.StoreSerializer
-    # serializer_class = serializers.StoreSerializer
+    serializer_class = serializers.StoreSerializer
 
     def get_queryset(self):
         context = self.request.parser_context
@@ -61,6 +42,29 @@ class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         return super(PartnersStoresViewSet, self).list(self, request, *args, **kwargs)
+
+    filterset_fields = ('accepts_orders',)
+    ordering_fields = ('name', 'id',)
+    search_fields = ('name',)
+    ordering = ('name',)
+
+
+class MeStoresViewSet(viewsets.ModelViewSet):
+    """ CRUD for user's shops """
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.StoreSerializer
+
+    def get_queryset(self):
+        queryset = Store.objects.filter(to_user_id=self.request.user.id).all()
+        return queryset
+
+    def get_serializer_class(self):
+        return serializers.StoreSerializer
+
+    def create(self, request, *args, **kwargs):
+        request.data['to_user'] = self.request.user.id
+        return viewsets.ModelViewSet.create(self, request, *args, **kwargs)
+        # return super(MeStoresViewSet, self).create(self, request, *args, **kwargs)
 
     filterset_fields = ('accepts_orders',)
     ordering_fields = ('name', 'id',)
