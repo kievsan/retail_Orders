@@ -15,12 +15,14 @@ class UserSerializer(djoser.UserSerializer):
     """
     class Meta:
         model = User
-        fields = tuple(User.REQUIRED_FIELDS) + (
+        fields = tuple(
+            User.REQUIRED_FIELDS) + (
             settings.USER_ID_FIELD,
-            settings.LOGIN_FIELD,
-        ) + (User.RELATED_DB,)
+            settings.LOGIN_FIELD,) + (
+            User.CONTACTS_DB,
+        )
         depth = 1
-        read_only_fields = (settings.LOGIN_FIELD, User.RELATED_DB,)
+        read_only_fields = (settings.LOGIN_FIELD, User.CONTACTS_DB,)
 
 
 class ContactSerializer(serializers.ModelSerializer):

@@ -53,7 +53,7 @@ class ContactViewSet(ModelViewSet):
         try:
             obj = queryset.get(pk=self.request.data['id'])
         except Exception:
-            raise ValidationError('Contact id was not found')
+            raise ValidationError('Contact ID was not found')
 
         self.check_object_permissions(self.request, obj)
         return obj

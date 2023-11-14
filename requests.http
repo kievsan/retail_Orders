@@ -20,7 +20,6 @@ Content-Type: application/json
 {
   "email": "{{email1}}",
   "password": "{{password1}}",
-  "type": "buyer",
   "last_name": "Киевский",
   "first_name": "Сергей"
 }
@@ -34,6 +33,17 @@ Content-Type: application/json
 {
   "uid": "Mg",
   "token": "bwlvvk-e318a9f8eb569656ce03cf9603c11871"
+}
+
+###
+
+# Получить токен аутентификации супер-пользователя
+POST {{authUrl}}/token/login/
+Content-Type: application/json
+
+{
+  "email": "{{superuser_email}}",
+  "password": "{{superuser_password}}"
 }
 
 ###
@@ -57,7 +67,7 @@ Authorization: Token {{token1}}
 ###
 
 # Удаление пользователя
-DELETE {{authUrl}}/users/29/
+DELETE {{authUrl}}/users/34/
 Content-Type: application/json
 Authorization: Token {{superuser_token}}
 
@@ -93,6 +103,53 @@ Authorization: Token {{superuser_token}}
   "city": "{{city1}}",
   "phone": "{{phone1}}",
   "to_user": "1"
+}
+
+###
+
+# Партнерские магазины всех пользователей
+GET {{apiUrl}}/stores/partners/
+Authorization: Token {{token1}}
+
+###
+
+# Партнерские магазины по id пользователя
+GET {{apiUrl}}/stores/partners/34/
+Authorization: Token {{token1}}
+
+###
+
+# Свои магазины пользователя
+GET {{apiUrl}}/stores/me/
+Authorization: Token {{token1}}
+
+###
+
+# Свой магазин пользователя по id магазина
+GET {{apiUrl}}/stores/me/2/
+Authorization: Token {{token1}}
+
+###
+
+# Добавить свой магазин в партнеры
+POST {{apiUrl}}/stores/me/
+Content-Type: application/json
+Authorization: Token {{token1}}
+
+{
+  "name": "{{store3}}",
+  "url": "{{store_url3}}"
+}
+
+###
+
+# Удалить по id свой магазин из партнеров
+DELETE {{apiUrl}}/stores/me/16/
+Content-Type: application/json
+Authorization: Token {{token1}}
+
+{
+  "current_password": "{{password1}}"
 }
 
 ###

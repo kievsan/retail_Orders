@@ -6,9 +6,12 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
+# from api.models import Store
+
 USER_TYPE_CHOICES = (
-    ('shop', _('Shop')),
-    ('buyer', _('Buyer')),
+    ('retailer', _('Retailer')),
+    ('partner', _('Partner')),
+    ('admin', _('Administrator')),
 )
 
 CONTACT_ITEMS_LIMIT = 5
@@ -22,7 +25,7 @@ class UserManager(BaseUserManager):
 
     def _create_user(self, email, password, **extra_fields):
         """
-        Create and save a user with the given username, email, and password.
+        Create and save a user with the given email, and password.
         """
         if not email:
             raise ValueError('The email must be set.')
@@ -56,10 +59,10 @@ class User(AbstractUser):
     """
     Swapped user model
     """
-    REQUIRED_FIELDS = ['last_name', 'first_name', 'patronymic', 'type', 'company', 'position']
+    REQUIRED_FIELDS = ['last_name', 'first_name', 'patronymic', 'company', 'position']
     USERNAME_FIELD = 'email'
     MAIL_FIELD = "email"
-    RELATED_DB = 'contacts'
+    CONTACTS_DB = 'contacts'
     objects = UserManager()
     current_validator = UnicodeUsernameValidator()
 
@@ -68,7 +71,7 @@ class User(AbstractUser):
     patronymic = models.CharField(_('patronymic'), max_length=30, blank=True)
     company = models.CharField(_('company'), help_text=_('Enter company name'), max_length=50, blank=True)
     position = models.CharField(_('position'), help_text=_('Enter staff position in company'), max_length=50, blank=True)
-    type = models.CharField(_('user type'), choices=USER_TYPE_CHOICES, max_length=10, default='buyer')
+    # type = models.CharField(_('user type'), choices=USER_TYPE_CHOICES, max_length=10, default='retailer')
 
     username = models.CharField(_('user name'), max_length=10, unique=False, blank=True)
     # username = None
@@ -101,8 +104,23 @@ class User(AbstractUser):
         ),
     )
 
+    def is_partner(self) -> bool:
+        return False # self.has_store()
+
+    # def has_store(self) -> bool:
+    #     return self.get_store() is not None
+    #
+    # def get_store(self):
+    #     return self.stores.first()
+    #
+    # def number_of_store(self):
+    #     return len(self.store_list())
+    #
+    # def store_list(self) -> list:
+    #     return self.stores.all()
+
     def __str__(self):
-        return f'{self.email}: {self.first_name} {self.last_name}'
+        return f'{self.email}: {"partner" if self.is_partner() else "retailer"} {self.first_name} {self.last_name}'
 
     class Meta(AbstractUser.Meta):
         db_table = 'users'
@@ -117,7 +135,9 @@ class Contact(models.Model):
         :param PhoneNumber phone: contact phone;
         :param str city, street, house, structure, building, apartment : contact address.
     """
-    to_user = models.ForeignKey(User, verbose_name=_('user'), related_name=User.RELATED_DB, on_delete=models.CASCADE)
+    to_user = models.ForeignKey(User, verbose_name=_('user'),
+                                related_name=User.CONTACTS_DB,
+                                on_delete=models.CASCADE)
     person = models.CharField(_('contact person'), help_text=_('Enter contact person'), max_length=50, blank=True)
     city = models.CharField(_('city'), help_text=_('Enter city name'), max_length=50, null=False, blank=False)
     street = models.CharField(_('street'), help_text=_('Enter street name'), max_length=50, blank=True)
@@ -140,6 +160,6 @@ class Contact(models.Model):
         return f'{self.person}, {self.phone}, {self.city} {self.street} {self.house}'
 
     class Meta:
-        db_table = User.RELATED_DB
+        db_table = User.CONTACTS_DB
         verbose_name = _('Contact')
         verbose_name_plural = _('Personal contacts')
