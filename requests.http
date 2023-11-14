@@ -113,7 +113,7 @@ Authorization: Token {{token1}}
 
 ###
 
-# Партнерские магазины пользователя
+# Партнерские магазины по id пользователя
 GET {{apiUrl}}/stores/partners/34/
 Authorization: Token {{token1}}
 
@@ -125,7 +125,7 @@ Authorization: Token {{token1}}
 
 ###
 
-# Свой магазин пользователя по id
+# Свой магазин пользователя по id магазина
 GET {{apiUrl}}/stores/me/2/
 Authorization: Token {{token1}}
 

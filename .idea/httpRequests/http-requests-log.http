@@ -1,3 +1,204 @@
+POST http://localhost:8008/api/v1/stores/me/
+Content-Type: application/json
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+{
+  "name": "myStore-3",
+  "url": "http://myStore3.example.reg.ru"
+}
+
+<> 2023-11-14T130948.201.json
+
+###
+
+POST http://localhost:8008/api/v1/stores/me/
+Content-Type: application/json
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+{
+  "name": "myStore-3",
+  "url": "http://myStore3.example.reg.ru"
+}
+
+<> 2023-11-14T130903.500.html
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T130451.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T130320.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T125801.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T125657.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T125604.500.html
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T125426.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T125301.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T125041.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124938.500.html
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124847.500.html
+
+###
+
+GET http://localhost:8008/api/v1/stores/me/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124838.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124727.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124622.500.html
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124541.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124428.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124343.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124246.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124146.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T124053.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T123947.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T123717.200.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T115926.404.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T115340.404.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T115015.404.json
+
+###
+
+GET http://localhost:8008/api/v1/stores/partners/34/
+Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
+
+<> 2023-11-14T114527.404.json
+
+###
+
 GET http://localhost:8008/api/v1/stores/partners/34/
 Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
 
@@ -262,292 +463,6 @@ Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
   "name": "myStore-3",
   "url": "http://myStore3.example.reg.ru"
 }
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T104033.201.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T103051.201.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T100349.201.json
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/5/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111"
-}
-
-<> 2023-11-14T100219.404.json
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/5/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111"
-}
-
-<> 2023-11-14T100201.404.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru"
-}
-
-<> 2023-11-14T095723.201.json
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/4/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111"
-}
-
-###
-
-GET http://localhost:8008/api/v1/stores/me/2/
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-<> 2023-11-14T095531.200.json
-
-###
-
-GET http://localhost:8008/api/v1/stores/me/1/
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-<> 2023-11-14T095519.200.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru",
-  "to_user": "1"
-}
-
-<> 2023-11-14T090249.400.json
-
-###
-
-GET http://localhost:8008/api/v1/stores/partners/34/
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-<> 2023-11-14T090033.404.json
-
-###
-
-GET http://localhost:8008/api/v1/stores/partners/3/
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-<> 2023-11-14T090016.404.json
-
-###
-
-GET http://localhost:8008/api/v1/stores/partners/3/
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-<> 2023-11-14T082644.404.json
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111",
-  "id": "3"
-}
-
-<> 2023-11-14T082617.405.json
-
-###
-
-GET http://localhost:8008/api/v1/stores/partners/
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-<> 2023-11-14T082515.200.json
-
-###
-
-GET http://localhost:8008/api/v1/stores/me/
-Authorization: Token fb50a5ebcbaee55d1260371d8293fed8bb9e74c6
-
-<> 2023-11-14T082440.200.json
-
-###
-
-GET http://localhost:8008/api/v1/stores/me/
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-<> 2023-11-14T082348.200.json
-
-###
-
-GET http://localhost:8008/api/v1/stores/partners/3/
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-<> 2023-11-14T082257.404.json
-
-###
-
-GET http://localhost:8008/api/v1/stores/partners/3/
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-<> 2023-11-14T081915.404.json
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111",
-  "idd": "3"
-}
-
-<> 2023-11-14T081410.405.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-3",
-  "url": "http://myStore3.example.reg.ru",
-  "to_user": "34"
-}
-
-<> 2023-11-14T080925.201.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "{{store3}}",
-  "url": "http://myStore3.example.reg.ru",
-  "to_user": "34"
-}
-
-<> 2023-11-14T080741.201.json
-
-###
-
-POST http://localhost:8008/api/v1/stores/me/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "name": "myStore-2",
-  "url": "http://myStore2.example.reg.ru",
-  "to_user": "34"
-}
-
-<> 2023-11-14T080609.400.json
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/2/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111"
-}
-
-<> 2023-11-14T080444.500.html
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/2/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111"
-}
-
-<> 2023-11-14T080218.500.html
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/2/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111"
-}
-
-<> 2023-11-14T075755.500.html
-
-###
-
-DELETE http://localhost:8008/api/v1/stores/me/2/
-Content-Type: application/json
-Authorization: Token bff56c8d2762a2924aa681d73b0834c74bd3dd97
-
-{
-  "current_password": "retail111"
-}
-
-<> 2023-11-14T075504.500.html
 
 ###
 

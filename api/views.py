@@ -26,24 +26,12 @@ class MeStoresViewSet(viewsets.ModelViewSet):
         # pprint(store for store in queryset if store)  ###
         return queryset
 
-    # def get_object(self):
-    #     queryset = self.filter_queryset(self.get_queryset())
-    #     pprint(data for data in self.request.data)  ###
-    #     store_id = self.request.data.get('id')
-    #     try:
-    #         obj = queryset.get(pk=store_id)
-    #     except Exception:
-    #         raise ValidationError(f'Store ID={store_id} was not found')
-    #
-    #     self.check_object_permissions(self.request, obj)
-    #     return obj
-
     def get_serializer_class(self):
         return serializers.StoreSerializer
 
     def create(self, request, *args, **kwargs):
         request.data['to_user'] = self.request.user.id
-        # super().create(self, request, *args, **kwargs)
+        # return super(MeStoresViewSet, self).create(self, request, *args, **kwargs)
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -59,8 +47,20 @@ class MeStoresViewSet(viewsets.ModelViewSet):
 class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
     """ Partners stores list """
     permission_classes = [IsAuthenticated]
-    serializer_class = serializers.StoreSerializer
-    queryset = Store.objects.all()
+
+    def get_serializer_class(self):
+        return serializers.StoreSerializer
+    # serializer_class = serializers.StoreSerializer
+
+    def get_queryset(self):
+        context = self.request.parser_context
+        # pprint(context) ###
+        user_id = context['kwargs'].get('pk')
+        queryset = Store.objects.filter(to_user_id=user_id).all()
+        return queryset
+
+    def retrieve(self, request, *args, **kwargs):
+        return super(PartnersStoresViewSet, self).list(self, request, *args, **kwargs)
 
     filterset_fields = ('accepts_orders',)
     ordering_fields = ('name', 'id',)
