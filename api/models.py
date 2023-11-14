@@ -17,7 +17,7 @@ STATE_CHOICES = (
 
 
 class Store(models.Model):
-    REQUIRED_FIELDS = ['name', 'url', 'to_user']
+    REQUIRED_FIELDS = ['id', 'name', 'url', 'to_user']
     NAME_FIELD = 'name'
     name = models.CharField(max_length=50, verbose_name=_('store name'), unique=True)
     url = models.URLField(verbose_name='url', null=True, blank=True)

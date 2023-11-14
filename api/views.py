@@ -4,11 +4,11 @@ from django.core.exceptions import ValidationError
 from django.core.validators import URLValidator
 from django.http import JsonResponse
 from django.shortcuts import render
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from yaml import load as yaml_load
 
-
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework import serializers as drf_serializers
 from rest_framework.permissions import IsAuthenticated
 
@@ -19,52 +19,53 @@ import api.serializers as serializers
 class MeStoresViewSet(viewsets.ModelViewSet):
     """ CRUD for user's shops """
     permission_classes = [IsAuthenticated]
+    # serializer_class = serializers.StoreSerializer
 
     def get_queryset(self):
         queryset = Store.objects.filter(to_user_id=self.request.user.id).all()
-        # pprint(store for store in queryset if store)
+        # pprint(store for store in queryset if store)  ###
         return queryset
 
-    def get_object(self):
-        queryset = self.filter_queryset(self.get_queryset())
-        # pprint(data for data in self.request.data)
-        store_id = self.request.data.get('id')
-        try:
-            obj = queryset.get(pk=store_id)
-        except Exception:
-            raise ValidationError(f'Store ID={store_id} was not found')
-
-        self.check_object_permissions(self.request, obj)
-        return obj
+    # def get_object(self):
+    #     queryset = self.filter_queryset(self.get_queryset())
+    #     pprint(data for data in self.request.data)  ###
+    #     store_id = self.request.data.get('id')
+    #     try:
+    #         obj = queryset.get(pk=store_id)
+    #     except Exception:
+    #         raise ValidationError(f'Store ID={store_id} was not found')
+    #
+    #     self.check_object_permissions(self.request, obj)
+    #     return obj
 
     def get_serializer_class(self):
         return serializers.StoreSerializer
 
-    # filterset_fields = ('accepts_orders',)
-    # ordering_fields = ('name', 'id',)
-    # search_fields = ('name',)
-    # ordering = ('name',)
-
-
-class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
-    """ Partners stores list """
-    permission_classes = [IsAuthenticated]
-    queryset = Store.objects.all()
+    def create(self, request, *args, **kwargs):
+        request.data['to_user'] = self.request.user.id
+        # super().create(self, request, *args, **kwargs)
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
     filterset_fields = ('accepts_orders',)
     ordering_fields = ('name', 'id',)
     search_fields = ('name',)
     ordering = ('name',)
 
-    serializer_classes = {
-        'list':serializers.StoreSerializer,
-        'retrieve': serializers.StoreDetailSerializer,
-    }
-    default_serializer_class = serializers.StoreSerializer
 
-    def get_serializer_class(self):
-        return self.serializer_classes.get(self.action, self.default_serializer_class)
+class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
+    """ Partners stores list """
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.StoreSerializer
+    queryset = Store.objects.all()
 
+    filterset_fields = ('accepts_orders',)
+    ordering_fields = ('name', 'id',)
+    search_fields = ('name',)
+    ordering = ('name',)
 
 # class PartnerUpdate(APIView):
 #     """
@@ -114,6 +115,3 @@ class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
 #                 return JsonResponse({'Status': True})
 #
 #         return JsonResponse({'Status': False, 'Errors': 'Не указаны все необходимые аргументы'})
-
-
-

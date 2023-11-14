@@ -119,8 +119,14 @@ Authorization: Token {{token1}}
 
 ###
 
-# Свои магазины пользователя с токеном
+# Свои магазины пользователя
 GET {{apiUrl}}/stores/me/
+Authorization: Token {{token1}}
+
+###
+
+# Свой магазин пользователя по id
+GET {{apiUrl}}/stores/me/2/
 Authorization: Token {{token1}}
 
 ###
@@ -132,14 +138,13 @@ Authorization: Token {{token1}}
 
 {
   "name": "{{store3}}",
-  "url": "{{store_url3}}",
-  "to_user": "34"
+  "url": "{{store_url3}}"
 }
 
 ###
 
-# Удалить свой магазин из партнеров
-DELETE {{apiUrl}}/stores/me/
+# Удалить по id свой магазин из партнеров
+DELETE {{apiUrl}}/stores/me/16/
 Content-Type: application/json
 Authorization: Token {{token1}}
 
