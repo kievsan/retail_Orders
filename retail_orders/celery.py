@@ -1,7 +1,7 @@
 # переменная окружения DJANGO_SETTINGS_MODULE для командной строки Celery.
 import os, django
 
-os.environ.setdefault('DJANGO_SETTING_MODULE', 'retail_orders.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'retail_orders.settings')
 django.setup()
 
 from celery import Celery
@@ -13,7 +13,7 @@ app = Celery('retail_orders',
              backend="redis://localhost:6379/2",
              broker="redis://localhost:6379/1",
              include=[
-                 'api_auth.tasks',
+                 'api.tasks',
              ])
 
 # namespace определяет префикс, который в settings.py будет у настроек, связанных с Celery.

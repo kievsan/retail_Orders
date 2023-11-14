@@ -6,9 +6,12 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
+# from api.models import Store
+
 USER_TYPE_CHOICES = (
-    ('shop', _('Shop')),
-    ('buyer', _('Buyer')),
+    ('retailer', _('Retailer')),
+    ('partner', _('Partner')),
+    ('admin', _('Administrator')),
 )
 
 CONTACT_ITEMS_LIMIT = 5
@@ -56,7 +59,7 @@ class User(AbstractUser):
     """
     Swapped user model
     """
-    REQUIRED_FIELDS = ['last_name', 'first_name', 'patronymic', 'type', 'company', 'position']
+    REQUIRED_FIELDS = ['last_name', 'first_name', 'patronymic', 'company', 'position']
     USERNAME_FIELD = 'email'
     MAIL_FIELD = "email"
     CONTACTS_DB = 'contacts'
@@ -68,7 +71,7 @@ class User(AbstractUser):
     patronymic = models.CharField(_('patronymic'), max_length=30, blank=True)
     company = models.CharField(_('company'), help_text=_('Enter company name'), max_length=50, blank=True)
     position = models.CharField(_('position'), help_text=_('Enter staff position in company'), max_length=50, blank=True)
-    type = models.CharField(_('user type'), choices=USER_TYPE_CHOICES, max_length=10, default='buyer')
+    # type = models.CharField(_('user type'), choices=USER_TYPE_CHOICES, max_length=10, default='retailer')
 
     username = models.CharField(_('user name'), max_length=10, unique=False, blank=True)
     # username = None
@@ -101,8 +104,23 @@ class User(AbstractUser):
         ),
     )
 
+    def is_partner(self) -> bool:
+        return False # self.has_store()
+
+    # def has_store(self) -> bool:
+    #     return self.get_store() is not None
+    #
+    # def get_store(self):
+    #     return self.stores.first()
+    #
+    # def number_of_store(self):
+    #     return len(self.store_list())
+    #
+    # def store_list(self) -> list:
+    #     return self.stores.all()
+
     def __str__(self):
-        return f'{self.email}: {self.first_name} {self.last_name}'
+        return f'{self.email}: {"partner" if self.is_partner() else "retailer"} {self.first_name} {self.last_name}'
 
     class Meta(AbstractUser.Meta):
         db_table = 'users'

@@ -16,16 +16,22 @@ STATE_CHOICES = (
 )
 
 
-class Shop(models.Model):
-    name = models.CharField(max_length=50, verbose_name=_('shop name'), unique=True)
+class Store(models.Model):
+    REQUIRED_FIELDS = ['name', 'url', 'to_user']
+    NAME_FIELD = 'name'
+    name = models.CharField(max_length=50, verbose_name=_('store name'), unique=True)
     url = models.URLField(verbose_name='url', null=True, blank=True)
+    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='user name',
+                                related_name='stores',
+                                blank=True, null=True, # без этого не проходит makemigrations ???!
+                                on_delete=models.CASCADE)
 
     accepts_orders = models.BooleanField(verbose_name=_('store accepts orders'), default=True)
 
     class Meta:
-        db_table = 'shops'
-        verbose_name = _('Shop')
-        verbose_name_plural = _('Shops')
+        db_table = 'stores'
+        verbose_name = _('Store')
+        verbose_name_plural = _('Stores')
         ordering = ('-name',)
 
     def __str__(self):
@@ -40,9 +46,9 @@ class Shop(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=40, verbose_name=_('category name'))
-    shops = models.ManyToManyField(Shop, verbose_name=_('shops'),
-                                   related_name='categories',
-                                   blank=True)
+    stores = models.ManyToManyField(Store, verbose_name=_('stores'),
+                                    related_name='categories',
+                                    blank=True)
 
     class Meta:
         db_table = 'categories'
@@ -54,10 +60,10 @@ class Category(models.Model):
         return self.name
 
     def store_list(self):
-        return self.shops.all()
+        return self.stores.all()
 
     def store_names_str(self):
-        return ', '.join([shop.name for shop in self.shops.all()])
+        return ', '.join([store.name for store in self.stores.all()])
 
 
 class Product(models.Model):
@@ -81,7 +87,7 @@ class ProductDetails(models.Model):
     product = models.ForeignKey(Product, verbose_name=_('product'),
                                 related_name='product_details',
                                 blank=True, on_delete=models.CASCADE)
-    shop = models.ForeignKey(Shop, verbose_name=_('shop'),
+    shop = models.ForeignKey(Store, verbose_name=_('shop'),
                              related_name='product_details',
                              blank=True, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
@@ -166,8 +172,8 @@ class OrderItem(models.Model):
                               related_name='ordered_items',
                               blank=True, on_delete=models.CASCADE)
     product_details = models.ForeignKey(ProductDetails, verbose_name=_('prodict details'),
-                                     related_name='ordered_items',
-                                     blank=True, on_delete=models.CASCADE)
+                                        related_name='ordered_items',
+                                        blank=True, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
 
     class Meta:
