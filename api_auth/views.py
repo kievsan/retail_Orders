@@ -1,4 +1,5 @@
 import requests
+from requests import JSONDecodeError
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.exceptions import ValidationError
@@ -7,7 +8,6 @@ from rest_framework.viewsets import ModelViewSet
 from djoser.conf import settings as djoser
 
 from api_auth.serializers import ContactSerializer
-# from api_auth.models import Contact
 
 from utils import get_user_models
 
@@ -30,7 +30,7 @@ def email_user_activation(request, uid, token):
     resp = {"is_activated": False}
     try:
         resp += response.json()
-    except Exception:
+    except JSONDecodeError:
         resp["is_activated"] = True
         resp["detail"] = "Email is confirmed."
     return Response(resp, status=response.status_code)

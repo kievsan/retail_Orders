@@ -23,7 +23,7 @@ class Store(models.Model):
     url = models.URLField(verbose_name='url', null=True, blank=True)
     to_user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='user name',
                                 related_name='stores',
-                                blank=True, null=True, # без этого не проходит makemigrations ???!
+                                blank=True, null=True,  # без этого не проходит makemigrations ???!
                                 on_delete=models.CASCADE)
 
     accepts_orders = models.BooleanField(verbose_name=_('store accepts orders'), default=True)
@@ -65,12 +65,18 @@ class Category(models.Model):
     def store_names_str(self):
         return ', '.join([store.name for store in self.stores.all()])
 
+    def product_list(self):
+        return self.products.all()
+
+    def product_names_str(self):
+        return ', '.join([product.name for product in self.products.all()])
+
 
 class Product(models.Model):
     name = models.CharField(max_length=80, verbose_name=_('product name'))
-    category = models.ForeignKey(Category, verbose_name=_('category'),
-                                 related_name='products',
-                                 blank=True, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category, verbose_name=_('category'),
+                                        related_name='products',
+                                        blank=True)
 
     class Meta:
         db_table = 'products'
@@ -80,6 +86,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def category_list(self):
+        return self.categories.all()
+
+    def category_names_str(self):
+        return ', '.join([category.name for category in self.categories.all()])
 
 
 class ProductDetails(models.Model):
@@ -141,7 +153,7 @@ class ProductParameter(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.value} ]'
+        return f'[ {self.value} ]'
 
 
 class Order(models.Model):
