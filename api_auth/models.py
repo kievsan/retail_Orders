@@ -104,23 +104,9 @@ class User(AbstractUser):
         ),
     )
 
-    def is_partner(self) -> bool:
-        return False # self.has_store()
-
-    # def has_store(self) -> bool:
-    #     return self.get_store() is not None
-    #
-    # def get_store(self):
-    #     return self.stores.first()
-    #
-    # def number_of_store(self):
-    #     return len(self.store_list())
-    #
-    # def store_list(self) -> list:
-    #     return self.stores.all()
-
     def __str__(self):
-        return f'{self.email}: {"partner" if self.is_partner() else "retailer"} {self.first_name} {self.last_name}'
+        my_contacts = self.contact_set
+        return f'{self.email}: {self.first_name} {self.last_name}'
 
     class Meta(AbstractUser.Meta):
         db_table = 'users'
