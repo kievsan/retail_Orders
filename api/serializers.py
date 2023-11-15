@@ -13,4 +13,4 @@ class StoreSerializer(serializers.ModelSerializer):
         model = Store
         fields = '__all__'
         # fields = tuple(Store.REQUIRED_FIELDS)
-        # read_only_fields = ('id')
+        # read_only_fields = ('id',)
