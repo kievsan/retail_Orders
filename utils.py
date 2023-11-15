@@ -10,6 +10,7 @@ from yaml import load as yaml_load, SafeLoader, safe_load
 import requests
 
 from api.models import Store, Category, Product, ProductDetails, Parameter, ProductParameter
+from api.responses import ResponseOK
 
 
 def get_user_models():
@@ -85,3 +86,5 @@ def upload_store_price(url=None, file_name=None, file_obj=None, user_id=0, store
             ProductParameter.objects.create(product_detail_id=product_details.id,
                                             parameter_id=parameter.id,
                                             value=value)
+
+    return ResponseOK(message='the price list is being updated...')
