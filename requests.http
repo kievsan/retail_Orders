@@ -178,7 +178,7 @@ Authorization: Token {{token1}}
 ###
 
 # Обновить по id магазина его партнерский прайс
-PATCH {{apiUrl}}/stores/me/2/
+PATCH {{apiUrl}}/stores/me/3/
 Content-Type: application/json
 Authorization: Token {{token1}}
 

@@ -1,3 +1,4 @@
+import os
 from pprint import pprint
 
 from django.core.exceptions import ValidationError
@@ -90,8 +91,8 @@ class MeStoresViewSet(viewsets.ModelViewSet):
         if price_list_url:
             # price_list_url = validate_url(price_list_url)
             store_id = kwargs.get('pk')
-            print(f'Файл для загрузки прайса магазина {store_id} находится по маршруту:\t{price_list_url}')
-            celery_upload_store_price(price_list_url, None, request.user.id)
+            print(f'Файл для загрузки прайса магазина {store_id} ищем по маршруту:\tdata/{price_list_url}') ###
+            celery_upload_store_price(None, price_list_url, None, request.user.id, store_id)
             return ResponseOK(message='the price list is being updated...')
         return viewsets.ModelViewSet.partial_update(self, request, *args, **kwargs)
 

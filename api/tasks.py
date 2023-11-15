@@ -7,8 +7,13 @@ from retail_orders.celery import app
 
 
 @app.task
-def celery_upload_store_price(url=None, file_obj=None, user_id=0):
-    utils.upload_store_price(url, file_obj, user_id)
+def celery_upload_store_price(url=None, file_name=None, file_obj=None, user_id=0, store_id=0):
+    utils.upload_store_price(url,
+                             file_name,
+                             file_obj,
+                             user_id,
+                             store_id
+                             )
 
 
 @shared_task()

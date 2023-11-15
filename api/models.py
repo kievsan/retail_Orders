@@ -149,6 +149,7 @@ class ProductParameter(models.Model):
     value = models.CharField(verbose_name=_('value'), max_length=100)
 
     class Meta:
+        db_table = 'products_parameters'
         verbose_name = _('Parameter')
         verbose_name_plural = _('Parameters')
         constraints = [
