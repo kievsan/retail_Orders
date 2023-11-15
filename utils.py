@@ -52,12 +52,13 @@ def upload_store_price(url=None, file_name=None, file_obj=None, user_id=0, store
     #     stream = requests.get(url).content
     #     data = yaml_load(stream, Loader=SafeLoader)
 
-    pprint(data)
+    # pprint(data)
 
     #######     Store
     store, _ = Store.objects.get_or_create(
-        name=data.get('shop'),
-        defaults={'owner_id': user_id, 'store_id': store_id}
+        id=store_id,
+        owner_id=user_id,
+        defaults={'name': data.get('shop')}
     )
 
     #######     Category
@@ -87,4 +88,14 @@ def upload_store_price(url=None, file_name=None, file_obj=None, user_id=0, store
                                             parameter_id=parameter.id,
                                             value=value)
 
+    store.price_list_url = file_name
+    store.items = 0
+    categories_uploaded = Category.stores.through.objects.filter(store_id=store_id)
+    for category in categories_uploaded:
+        products_uploaded = Product.categories.through.objects.filter(category_id=category.category.id)
+        store.items += products_uploaded.count()
+        # print('category_id = ', category.category_id)
+        # print('products_count = ', products_uploaded.count())
+        # print('items = ', store.items)
+    store.save()
     return ResponseOK(message='the price list is being updated...')
