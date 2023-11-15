@@ -30,15 +30,23 @@ class StoreViewSet(viewsets.ReadOnlyModelViewSet):
 
 class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
     """ Partners stores list """
+    print(' start PartnersStoresViewSet ')
+    print('\t stores/partner/')
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.StoreSerializer
 
     def get_queryset(self):
-        context = self.request.parser_context
-        # pprint(context) ###
-        user_id = context['kwargs'].get('pk')
-        queryset = Store.objects.filter(to_user_id=user_id).all()
+        current_user_id = self.request.user.id
+        # target_user_id = self.request.parser_context['kwargs'].get('pk')
+        target_user_id = self.kwargs.get('pk') if self.action == 'retrieve' else current_user_id
+        objects = Store.objects.filter(to_user_id=target_user_id)
+        queryset = objects.all()
+        # print(f'\tperformed Request({self.basename}, {self.action},'
+        #       f' user_id:\t{current_user_id} -> {target_user_id})')
         return queryset
+
+    def list(self, request, *args, **kwargs):
+        return super(PartnersStoresViewSet, self)
 
     def retrieve(self, request, *args, **kwargs):
         return super(PartnersStoresViewSet, self).list(self, request, *args, **kwargs)
@@ -54,12 +62,14 @@ class MeStoresViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.StoreSerializer
 
-    def get_queryset(self):
-        queryset = Store.objects.filter(to_user_id=self.request.user.id).all()
-        return queryset
+    # def get_serializer_class(self):
+    #     return serializers.StoreSerializer
 
-    def get_serializer_class(self):
-        return serializers.StoreSerializer
+    def get_queryset(self):
+        user_id = self.request.user.id
+        print('user_id =', user_id)  ###
+        queryset = Store.objects.filter(to_user_id=user_id).all()
+        return queryset
 
     def create(self, request, *args, **kwargs):
         request.data['to_user'] = self.request.user.id

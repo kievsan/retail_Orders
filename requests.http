@@ -119,14 +119,14 @@ Authorization: Token {{token1}}
 
 ###
 
-# Партнерские магазины всех пользователей
-GET {{apiUrl}}/stores/partners/
+# Партнерские магазины пользователя
+GET {{apiUrl}}/stores/partner/
 Authorization: Token {{token1}}
 
 ###
 
 # Партнерские магазины по id пользователя
-GET {{apiUrl}}/stores/partners/34/
+GET {{apiUrl}}/stores/partner/34/
 Authorization: Token {{token1}}
 
 ###
@@ -157,6 +157,17 @@ Authorization: Token {{token1}}
 
 # Удалить по id свой магазин из партнеров
 DELETE {{apiUrl}}/stores/me/19/
+Content-Type: application/json
+Authorization: Token {{token1}}
+
+{
+  "current_password": "{{password1}}"
+}
+
+###
+
+# Обновить по id магазина свой партнерский прайс
+PUT {{apiUrl}}/stores/me/34/
 Content-Type: application/json
 Authorization: Token {{token1}}
 
