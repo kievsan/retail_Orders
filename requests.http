@@ -166,18 +166,18 @@ Authorization: Token {{token1}}
 
 ###
 
-# Обновить по id статус своего магазина (on/off)
+# Изменить по id статус своего магазина (True/False -> Open/Close)
 PATCH {{apiUrl}}/stores/me/2/
 Content-Type: application/json
 Authorization: Token {{token1}}
 
 {
-  "current_password": "{{password1}}"
+  "accepts_orders": "True"
 }
 
 ###
 
-# Обновить по id магазина свой партнерский прайс
+# Обновить по id магазина его партнерский прайс
 PUT {{apiUrl}}/stores/me/2/
 Content-Type: application/json
 Authorization: Token {{token1}}
