@@ -22,7 +22,7 @@ class Store(models.Model):
     name = models.CharField(max_length=50, verbose_name=_('store name'), unique=True)
     url = models.URLField(verbose_name=_('url'), null=True, blank=True)
     price_list_url = models.URLField(verbose_name=_('price list url'), null=True, blank=True)
-    items = models.PositiveSmallIntegerField(verbose_name=_('items'), null=True, blank=True)
+    product_quantity = models.PositiveSmallIntegerField(verbose_name=_('items'), null=True, blank=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user name'),
                               related_name='stores',
                               blank=True, null=True,  # без этого не проходит makemigrations ???!
