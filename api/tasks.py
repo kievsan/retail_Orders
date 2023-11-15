@@ -2,6 +2,14 @@ from django.conf import settings
 from django.core.mail import send_mail
 from celery import shared_task
 
+import utils
+from retail_orders.celery import app
+
+
+@app.task
+def celery_upload_store_price(url=None, file_obj=None, user_id=0):
+    utils.upload_store_price(url, file_obj, user_id)
+
 
 @shared_task()
 def send_activation_email_example(email, token):

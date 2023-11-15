@@ -156,7 +156,7 @@ Authorization: Token {{token1}}
 ###
 
 # Удалить по id свой магазин из партнеров
-DELETE {{apiUrl}}/stores/me/22/
+DELETE {{apiUrl}}/stores/me/23/
 Content-Type: application/json
 Authorization: Token {{token1}}
 
@@ -166,13 +166,24 @@ Authorization: Token {{token1}}
 
 ###
 
-# Обновить по id магазина свой партнерский прайс
-PUT {{apiUrl}}/stores/me/34/
+# Изменить по id возможность приема заказов в своем магазине (True/False)
+PATCH {{apiUrl}}/stores/me/2/
 Content-Type: application/json
 Authorization: Token {{token1}}
 
 {
-  "current_password": "{{password1}}"
+  "accepts_orders": "False"
+}
+
+###
+
+# Обновить по id магазина его партнерский прайс
+PATCH {{apiUrl}}/stores/me/2/
+Content-Type: application/json
+Authorization: Token {{token1}}
+
+{
+  "price_list_url": "{{store_price1}}"
 }
 
 ###

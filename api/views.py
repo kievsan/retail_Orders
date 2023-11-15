@@ -13,11 +13,22 @@ from rest_framework.permissions import IsAuthenticated
 
 from api.models import Store
 import api.serializers as serializers
+from api.responses import ResponseOK
+from api.tasks import celery_upload_store_price
 
 
 def viewset_info(veiwset, rout, current_user, target_user) -> str:
     return (f'performed Request({veiwset.basename}: {rout}, {veiwset.action}, '
             f'user_id:\t{current_user} -> {target_user})')
+
+
+def validate_url(url):
+    """
+    url validator
+    """
+    serializer = serializers.UrlSerializer(data=url)
+    serializer.is_valid(raise_exception=True)
+    return serializer.validated_data.get('url')
 
 
 class StoreViewSet(viewsets.ReadOnlyModelViewSet):
@@ -43,8 +54,8 @@ class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
         current_user_id = self.request.user.id
         # target_user_id = self.request.parser_context['kwargs'].get('pk')
         target_user_id = current_user_id if self.action == 'list' else self.kwargs.get('pk')
-        print(viewset_info(self, 'stores/partner/', current_user_id, target_user_id))   ###
-        objects = Store.objects.filter(to_user_id=target_user_id)
+        print(viewset_info(self, 'stores/partner/', current_user_id, target_user_id))  ###
+        objects = Store.objects.filter(owner_id=target_user_id)
         queryset = objects.all()
         return queryset
 
@@ -63,16 +74,26 @@ class MeStoresViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
-        self.request.data['to_user'] = self.request.data.get('to_user', self.request.user.id)
+        self.request.data['owner'] = self.request.data.get('owner', self.request.user.id)
         return serializers.StoreSerializer
 
     def get_queryset(self):
         current_user_id = self.request.user.id
         target_user_id = current_user_id
-        print(viewset_info(self, 'stores/me/', current_user_id, target_user_id))    ###
-        objects = Store.objects.filter(to_user_id=target_user_id)
+        print(viewset_info(self, 'stores/me/', current_user_id, target_user_id))  ###
+        objects = Store.objects.filter(owner_id=target_user_id)
         queryset = objects.all()
         return queryset
+
+    def partial_update(self, request, *args, **kwargs):
+        price_list_url = self.request.data.get('price_list_url')
+        if price_list_url:
+            # price_list_url = validate_url(price_list_url)
+            store_id = kwargs.get('pk')
+            print(f'Файл для загрузки прайса магазина {store_id} находится по маршруту:\t{price_list_url}')
+            celery_upload_store_price(price_list_url, None, request.user.id)
+            return ResponseOK(message='the price list is being updated...')
+        return viewsets.ModelViewSet.partial_update(self, request, *args, **kwargs)
 
     filterset_fields = ('accepts_orders',)
     ordering_fields = ('name', 'id',)

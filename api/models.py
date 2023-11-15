@@ -17,14 +17,16 @@ STATE_CHOICES = (
 
 
 class Store(models.Model):
-    REQUIRED_FIELDS = ['id', 'name', 'url', 'to_user']
+    REQUIRED_FIELDS = ['id', 'name', 'url', 'owner']
     NAME_FIELD = 'name'
     name = models.CharField(max_length=50, verbose_name=_('store name'), unique=True)
-    url = models.URLField(verbose_name='url', null=True, blank=True)
-    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='user name',
-                                related_name='stores',
-                                blank=True, null=True,  # без этого не проходит makemigrations ???!
-                                on_delete=models.CASCADE)
+    url = models.URLField(verbose_name=_('url'), null=True, blank=True)
+    price_list_url = models.URLField(verbose_name=_('price list url'), null=True, blank=True)
+    items = models.PositiveSmallIntegerField(verbose_name=_('items'), null=True, blank=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('user name'),
+                              related_name='stores',
+                              blank=True, null=True,  # без этого не проходит makemigrations ???!
+                              on_delete=models.CASCADE)
 
     accepts_orders = models.BooleanField(verbose_name=_('store accepts orders'), default=True)
 
@@ -98,10 +100,10 @@ class ProductDetails(models.Model):
     external_id = models.PositiveIntegerField(verbose_name=_('external id'))
     product = models.ForeignKey(Product, verbose_name=_('product'),
                                 related_name='product_details',
-                                blank=True, on_delete=models.CASCADE)
-    shop = models.ForeignKey(Store, verbose_name=_('shop'),
-                             related_name='product_details',
-                             blank=True, on_delete=models.CASCADE)
+                                on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, verbose_name=_('store'),
+                              related_name='product_details',
+                              on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
     price = models.DecimalField(max_digits=20, decimal_places=2, verbose_name=_('price'),
                                 validators=[MinValueValidator(0)])
@@ -114,12 +116,14 @@ class ProductDetails(models.Model):
         verbose_name = _('Product details')
         verbose_name_plural = _('Products details')
         constraints = [
-            models.UniqueConstraint(fields=['product', 'shop', 'external_id'],
-                                    name='unique_product_details'),
+            models.UniqueConstraint(
+                fields=['product', 'store', 'external_id'],
+                name='unique_product_details',
+            ),
         ]
 
     def __str__(self):
-        return f'{self.shop}: {self.product}'
+        return f'{self.store}: {self.product}'
 
 
 class Parameter(models.Model):
@@ -136,10 +140,10 @@ class Parameter(models.Model):
 
 
 class ProductParameter(models.Model):
-    product_details = models.ForeignKey(ProductDetails, verbose_name=_('product details'),
-                                        related_name='product_parameters',
-                                        blank=True, on_delete=models.CASCADE)
-    parameter = models.ForeignKey(Parameter, verbose_name=_('parameter'),
+    product_detail = models.ForeignKey(ProductDetails, verbose_name=_('product detail'),
+                                       related_name='product_parameters',
+                                       on_delete=models.CASCADE)
+    parameter = models.ForeignKey(Parameter, verbose_name=_('parameters'),
                                   related_name='product_parameters',
                                   blank=True, on_delete=models.CASCADE)
     value = models.CharField(verbose_name=_('value'), max_length=100)
@@ -148,7 +152,7 @@ class ProductParameter(models.Model):
         verbose_name = _('Parameter')
         verbose_name_plural = _('Parameters')
         constraints = [
-            models.UniqueConstraint(fields=['product_details', 'parameter'],
+            models.UniqueConstraint(fields=['product_detail', 'parameter'],
                                     name='unique_product_parameter'),
         ]
 
@@ -183,7 +187,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, verbose_name=_('order'),
                               related_name='ordered_items',
                               blank=True, on_delete=models.CASCADE)
-    product_details = models.ForeignKey(ProductDetails, verbose_name=_('prodict details'),
+    product_details = models.ForeignKey(ProductDetails, verbose_name=_('products details'),
                                         related_name='ordered_items',
                                         blank=True, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name=_('quantity'))
