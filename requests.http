@@ -156,7 +156,18 @@ Authorization: Token {{token1}}
 ###
 
 # Удалить по id свой магазин из партнеров
-DELETE {{apiUrl}}/stores/me/22/
+DELETE {{apiUrl}}/stores/me/23/
+Content-Type: application/json
+Authorization: Token {{token1}}
+
+{
+  "current_password": "{{password1}}"
+}
+
+###
+
+# Обновить по id статус своего магазина (on/off)
+PATCH {{apiUrl}}/stores/me/2/
 Content-Type: application/json
 Authorization: Token {{token1}}
 
@@ -167,7 +178,7 @@ Authorization: Token {{token1}}
 ###
 
 # Обновить по id магазина свой партнерский прайс
-PUT {{apiUrl}}/stores/me/34/
+PUT {{apiUrl}}/stores/me/2/
 Content-Type: application/json
 Authorization: Token {{token1}}
 

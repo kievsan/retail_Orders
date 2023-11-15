@@ -44,7 +44,7 @@ class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
         # target_user_id = self.request.parser_context['kwargs'].get('pk')
         target_user_id = current_user_id if self.action == 'list' else self.kwargs.get('pk')
         print(viewset_info(self, 'stores/partner/', current_user_id, target_user_id))   ###
-        objects = Store.objects.filter(to_user_id=target_user_id)
+        objects = Store.objects.filter(owner_id=target_user_id)
         queryset = objects.all()
         return queryset
 
@@ -63,14 +63,14 @@ class MeStoresViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_serializer_class(self):
-        self.request.data['to_user'] = self.request.data.get('to_user', self.request.user.id)
+        self.request.data['owner'] = self.request.data.get('owner', self.request.user.id)
         return serializers.StoreSerializer
 
     def get_queryset(self):
         current_user_id = self.request.user.id
         target_user_id = current_user_id
         print(viewset_info(self, 'stores/me/', current_user_id, target_user_id))    ###
-        objects = Store.objects.filter(to_user_id=target_user_id)
+        objects = Store.objects.filter(owner_id=target_user_id)
         queryset = objects.all()
         return queryset
 

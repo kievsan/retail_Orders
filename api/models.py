@@ -21,10 +21,10 @@ class Store(models.Model):
     NAME_FIELD = 'name'
     name = models.CharField(max_length=50, verbose_name=_('store name'), unique=True)
     url = models.URLField(verbose_name='url', null=True, blank=True)
-    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='user name',
-                                related_name='stores',
-                                blank=True, null=True,  # без этого не проходит makemigrations ???!
-                                on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='user name',
+                              related_name='stores',
+                              blank=True, null=True,  # без этого не проходит makemigrations ???!
+                              on_delete=models.CASCADE)
 
     accepts_orders = models.BooleanField(verbose_name=_('store accepts orders'), default=True)
 
