@@ -9,15 +9,20 @@ from rest_framework.views import APIView
 from yaml import load as yaml_load
 
 from rest_framework import viewsets, status
-from rest_framework import serializers as drf_serializers
 from rest_framework.permissions import IsAuthenticated
 
 from api.models import Store
 import api.serializers as serializers
 
 
+def viewset_info(veiwset, rout, current_user, target_user) -> str:
+    return (f'performed Request({veiwset.basename}: {rout}, {veiwset.action}, '
+            f'user_id:\t{current_user} -> {target_user})')
+
+
 class StoreViewSet(viewsets.ReadOnlyModelViewSet):
-    """ store """
+    """ Any stores (stores/any) """
+
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.StoreSerializer
     queryset = Store.objects.all()
@@ -29,24 +34,19 @@ class StoreViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
-    """ Partners stores list """
-    print(' start PartnersStoresViewSet ')
-    print('\t stores/partner/')
+    """ Partner stores (stores/partner/)"""
+
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.StoreSerializer
 
     def get_queryset(self):
         current_user_id = self.request.user.id
         # target_user_id = self.request.parser_context['kwargs'].get('pk')
-        target_user_id = self.kwargs.get('pk') if self.action == 'retrieve' else current_user_id
+        target_user_id = current_user_id if self.action == 'list' else self.kwargs.get('pk')
+        print(viewset_info(self, 'stores/partner/', current_user_id, target_user_id))   ###
         objects = Store.objects.filter(to_user_id=target_user_id)
         queryset = objects.all()
-        # print(f'\tperformed Request({self.basename}, {self.action},'
-        #       f' user_id:\t{current_user_id} -> {target_user_id})')
         return queryset
-
-    def list(self, request, *args, **kwargs):
-        return super(PartnersStoresViewSet, self)
 
     def retrieve(self, request, *args, **kwargs):
         return super(PartnersStoresViewSet, self).list(self, request, *args, **kwargs)
@@ -58,23 +58,21 @@ class PartnersStoresViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class MeStoresViewSet(viewsets.ModelViewSet):
-    """ CRUD for user's shops """
-    permission_classes = [IsAuthenticated]
-    serializer_class = serializers.StoreSerializer
+    """ CRUD for user's shops (stores/me/)"""
 
-    # def get_serializer_class(self):
-    #     return serializers.StoreSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_serializer_class(self):
+        self.request.data['to_user'] = self.request.data.get('to_user', self.request.user.id)
+        return serializers.StoreSerializer
 
     def get_queryset(self):
-        user_id = self.request.user.id
-        print('user_id =', user_id)  ###
-        queryset = Store.objects.filter(to_user_id=user_id).all()
+        current_user_id = self.request.user.id
+        target_user_id = current_user_id
+        print(viewset_info(self, 'stores/me/', current_user_id, target_user_id))    ###
+        objects = Store.objects.filter(to_user_id=target_user_id)
+        queryset = objects.all()
         return queryset
-
-    def create(self, request, *args, **kwargs):
-        request.data['to_user'] = self.request.user.id
-        return viewsets.ModelViewSet.create(self, request, *args, **kwargs)
-        # return super(MeStoresViewSet, self).create(self, request, *args, **kwargs)
 
     filterset_fields = ('accepts_orders',)
     ordering_fields = ('name', 'id',)

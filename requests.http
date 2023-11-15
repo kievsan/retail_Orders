@@ -105,16 +105,16 @@ Authorization: Token {{superuser_token}}
   "to_user": "1"
 }
 
-###
+#################################################
 
 # ВСЕ Магазины
-GET {{apiUrl}}/stores/
+GET {{apiUrl}}/stores/any/
 Authorization: Token {{token1}}
 
 ###
 
 # Любой магазин по его id
-GET {{apiUrl}}/stores/2/
+GET {{apiUrl}}/stores/any/2/
 Authorization: Token {{token1}}
 
 ###
@@ -156,7 +156,7 @@ Authorization: Token {{token1}}
 ###
 
 # Удалить по id свой магазин из партнеров
-DELETE {{apiUrl}}/stores/me/19/
+DELETE {{apiUrl}}/stores/me/22/
 Content-Type: application/json
 Authorization: Token {{token1}}
 
