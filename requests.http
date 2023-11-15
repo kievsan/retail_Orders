@@ -172,7 +172,7 @@ Content-Type: application/json
 Authorization: Token {{token1}}
 
 {
-  "accepts_orders": "True"
+  "accepts_orders": "False"
 }
 
 ###
@@ -183,7 +183,7 @@ Content-Type: application/json
 Authorization: Token {{token1}}
 
 {
-  "current_password": "{{password1}}"
+  "price_list_url": "{{store_price1}}"
 }
 
 ###
