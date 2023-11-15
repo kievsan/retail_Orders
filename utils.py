@@ -88,14 +88,16 @@ def upload_store_price(url=None, file_name=None, file_obj=None, user_id=0, store
                                             parameter_id=parameter.id,
                                             value=value)
 
-    store.price_list_url = file_name
-    store.items = 0
+    counter = 0
     categories_uploaded = Category.stores.through.objects.filter(store_id=store_id)
     for category in categories_uploaded:
         products_uploaded = Product.categories.through.objects.filter(category_id=category.category.id)
-        store.items += products_uploaded.count()
-        # print('category_id = ', category.category_id)
-        # print('products_count = ', products_uploaded.count())
-        # print('items = ', store.items)
+        counter += products_uploaded.count()
+        # print('category_id = ', category.category_id,
+        #       ', products_count = ', products_uploaded.count(),
+        #       ', product_quantity = ', counter)
+    store.product_quantity = counter
+    store.price_list_url = file_name
     store.save()
+
     return ResponseOK(message='the price list is being updated...')

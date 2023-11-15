@@ -178,12 +178,12 @@ Authorization: Token {{token1}}
 ###
 
 # Обновить по id магазина его партнерский прайс
-PATCH {{apiUrl}}/stores/me/2/
+PATCH {{apiUrl}}/stores/me/28/
 Content-Type: application/json
 Authorization: Token {{token1}}
 
 {
-  "price_list_url": "{{store_price2}}"
+  "price_list_url": "{{store_price1}}"
 }
 
 ###
