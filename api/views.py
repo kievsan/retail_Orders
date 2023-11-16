@@ -87,16 +87,20 @@ class MeStoresViewSet(viewsets.ModelViewSet):
         return queryset
 
     def partial_update(self, request, *args, **kwargs):
-        price_list_source = self.request.data.get('source')
-        if price_list_source:
-            price_list_source = validate_url(price_list_source)
+        price_source = self.request.data.get('source')
+        if price_source:
+            # price_source = validate_url(price_source)
             store_id = kwargs.get('pk')
-            print(f'Файл для загрузки прайса магазина {store_id} ищем по маршруту:\tdata/{price_list_source}') ###
+            print(f'Файл для загрузки прайса магазина {store_id} ищем по маршруту:\tdata/{price_source}') ###
 
-            task = celery_upload_store_price.delay(None, price_list_source, None, request.user.id, store_id)
+            task = celery_upload_store_price.delay(file_name=price_source,
+                                                   user_id=request.user.id,
+                                                   store_id=store_id)
             redis_dict.mset({task.id: store_id})
             print('Start celery task', task.id)
-            return CeleryResponseOK(store_id, message='the price list is being updated...')
+            return CeleryResponseOK(task.id,
+                                    message='the store price is being updated...',
+                                    store_id=store_id)
 
         return viewsets.ModelViewSet.partial_update(self, request, *args, **kwargs)
 

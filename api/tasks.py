@@ -6,7 +6,7 @@ import utils
 from retail_orders.celery import app
 
 
-@app.task
+@app.task(ignore_result=True)
 def celery_upload_store_price(url=None, file_name=None, file_obj=None, user_id=0, store_id=0):
     utils.upload_store_price(url,
                              file_name,

@@ -183,7 +183,7 @@ Content-Type: application/json
 Authorization: Token {{token1}}
 
 {
-  "price_list_url": "{{store_price1}}"
+  "source": "{{store_price1}}"
 }
 
 ###
