@@ -12,24 +12,24 @@ from yaml import load as yaml_load
 from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticated
 
+import redis
+
+from retail_orders import settings
+from utils import validate_url
 from api.models import Store
 import api.serializers as serializers
-from api.responses import ResponseOK
+from api.responses import ResponseOK, CeleryResponseOK
 from api.tasks import celery_upload_store_price
+
+
+# redis storage
+
+redis_dict = redis.Redis(host=settings.REDIS_HOST, port=settings.REDIS_HOST_PORT)
 
 
 def viewset_info(veiwset, rout, current_user, target_user) -> str:
     return (f'performed Request({veiwset.basename}: {rout}, {veiwset.action}, '
             f'user_id:\t{current_user} -> {target_user})')
-
-
-def validate_url(url):
-    """
-    url validator
-    """
-    serializer = serializers.UrlSerializer(data=url)
-    serializer.is_valid(raise_exception=True)
-    return serializer.validated_data.get('url')
 
 
 class StoreViewSet(viewsets.ReadOnlyModelViewSet):
@@ -87,13 +87,17 @@ class MeStoresViewSet(viewsets.ModelViewSet):
         return queryset
 
     def partial_update(self, request, *args, **kwargs):
-        price_list_url = self.request.data.get('price_list_url')
-        if price_list_url:
-            # price_list_url = validate_url(price_list_url)
+        price_list_source = self.request.data.get('source')
+        if price_list_source:
+            price_list_source = validate_url(price_list_source)
             store_id = kwargs.get('pk')
-            print(f'Файл для загрузки прайса магазина {store_id} ищем по маршруту:\tdata/{price_list_url}') ###
-            celery_upload_store_price(None, price_list_url, None, request.user.id, store_id)
-            return ResponseOK(message='the price list is being updated...')
+            print(f'Файл для загрузки прайса магазина {store_id} ищем по маршруту:\tdata/{price_list_source}') ###
+
+            task = celery_upload_store_price.delay(None, price_list_source, None, request.user.id, store_id)
+            redis_dict.mset({task.id: store_id})
+            print('Start celery task', task.id)
+            return CeleryResponseOK(store_id, message='the price list is being updated...')
+
         return viewsets.ModelViewSet.partial_update(self, request, *args, **kwargs)
 
     filterset_fields = ('accepts_orders',)

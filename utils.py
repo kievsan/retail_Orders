@@ -7,10 +7,9 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
 from yaml import load as yaml_load, SafeLoader, safe_load
-import requests
 
 from api.models import Store, Category, Product, ProductDetails, Parameter, ProductParameter
-from api.responses import ResponseOK
+import api.serializers as serializers
 
 
 def get_user_models():
@@ -96,8 +95,16 @@ def upload_store_price(url=None, file_name=None, file_obj=None, user_id=0, store
         # print('category_id = ', category.category_id,
         #       ', products_count = ', products_uploaded.count(),
         #       ', product_quantity = ', counter)
+
     store.product_quantity = counter
-    store.price_list_url = file_name
+    store.source = file_name
     store.save()
 
-    return ResponseOK(message='the price list is being updated...')
+
+def validate_url(url):
+    """
+    url validator
+    """
+    serializer = serializers.UrlSerializer(data=url)
+    serializer.is_valid(raise_exception=True)
+    return serializer.validated_data.get('url')
