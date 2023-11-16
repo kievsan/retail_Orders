@@ -110,6 +110,11 @@ DATABASES = {
     }
 }
 
+# redis storage
+
+REDIS_HOST = os.getenv('REDIS_HOST')
+REDIS_HOST_PORT = os.getenv('REDIS_HOST_PORT')
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 

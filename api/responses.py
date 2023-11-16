@@ -19,3 +19,16 @@ def ResponseNotFound(**kwargs):
 
 def ResponseBadRequest(**kwargs):
     return ResponseBase(False, http_status.HTTP_400_BAD_REQUEST, **kwargs)
+
+
+#################################   Celery:
+
+def CeleryResponseBase(task_id, status_code, **kwargs):
+    response = {'task_id': task_id}
+    if kwargs:
+        response.update(kwargs)
+    return Response(response, status=status_code)
+
+
+def CeleryResponseOK(task_id, **kwargs):
+    return CeleryResponseBase(task_id, http_status.HTTP_200_OK, **kwargs)

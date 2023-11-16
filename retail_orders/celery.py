@@ -1,11 +1,11 @@
 # переменная окружения DJANGO_SETTINGS_MODULE для командной строки Celery.
 import os, django
+from retail_orders import settings
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'retail_orders.settings')
 django.setup()
 
 from celery import Celery
-
 from celery.result import AsyncResult
 
 # экземпляр приложения
@@ -24,9 +24,11 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 # чтобы загружать определенные в нем "асинхронные" задания.
 app.autodiscover_tasks()
 
+
 def get_task_result(task_id: str) -> AsyncResult:
     print('start def celery_app.get_task')  #############
     return AsyncResult(task_id, app=app)
+
 
 #
 """ ЗАМЕЧАНИЯ:
